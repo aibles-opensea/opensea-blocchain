@@ -24,7 +24,8 @@ function App() {
   const [toggle, setToggle] = useState(false);
 
   const loadBlockchainData = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    // const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const provider = new ethers.providers.WebSocketProvider('ws://127.0.0.1:8545');
     setProvider(provider)
     const network = await provider.getNetwork()
 
