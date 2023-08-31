@@ -2,32 +2,30 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
-import "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
+import "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-// import "../structs/Structs.sol";
-import "./Events.sol";
+/**
+    @dev Base contract for OpenseaClone and its marketplace and redemption to inherit.
+    
+    [STORAGE SLOT]
+    - Initializable: 1 slot
+    - UUPSUpgradeable: 50 slots
+    - ERC1967UpgradeUpgradeable: 50 slots
+    - AccessControlUpgradeable: 50 slots
+    - ContextUpgradeable: 50 slots
+    - ERC165Upgradeable: 50 slots
 
-abstract contract Upgradeable is
-    ReentrancyGuardUpgradeable,
-    UUPSUpgradeable,
-    OwnableUpgradeable,
-    // Structs,
-    Events
-{
-    mapping(address => uint256) nonces;
-    // mapping(bytes32 => Order) orders;
-    mapping(bytes32 => bool) activeOrders;
-    mapping(address => bool) public defaultCollections;
+ */
+// todo: Rearrange variables.
+contract Upgradeable is UUPSUpgradeable, AccessControlUpgradeable {
+    // starts at [251]
+    address public marketplace;
+    address public mintingImpl;
 
-    function initialize() external initializer {
-        __ReentrancyGuard_init_unchained();
-        __Ownable_init_unchained();
-        __UUPSUpgradeable_init_unchained();
-    }
-
-    // Required by OZ
+    /**
+        @dev Required.
+     */
     function _authorizeUpgrade(
-        address newImplementation
-    ) internal virtual override onlyOwner {}
+        address
+    ) internal virtual override onlyRole(DEFAULT_ADMIN_ROLE) {}
 }
