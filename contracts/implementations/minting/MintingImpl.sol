@@ -6,6 +6,11 @@ import "./handlers/MintHandler.sol";
 contract MintingImpl is MintHandler {
 
    // Add-on functions, logics
+   /**
+        @param collection: collection's address
+        @param to: minter's address 
+        @param uri: link metadata of nft in IPFS
+     */
    function mint(
         address collection,
         address to,
